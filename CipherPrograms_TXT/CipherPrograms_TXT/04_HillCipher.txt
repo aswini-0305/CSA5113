@@ -1,0 +1,41 @@
+HILL CIPHER (2 x 2 MATRIX) - C PROGRAM
+
+#include <stdio.h>
+#include <string.h>
+#include <ctype.h>
+
+int main(void)
+{
+    int key[2][2], i, a, b, len;
+    char text[500];
+
+    printf("Enter the 2x2 key matrix (four integers):\n");
+    scanf("%d%d%d%d",
+          &key[0][0], &key[0][1],
+          &key[1][0], &key[1][1]);
+
+    printf("Enter plaintext (no spaces): ");
+    scanf("%499s", text);
+
+    len = (int)strlen(text);
+
+    if (len % 2 != 0)
+    {
+        text[len++] = 'X';
+        text[len] = '\0';
+    }
+
+    printf("Encrypted text: ");
+
+    for (i = 0; i < len; i += 2)
+    {
+        a = toupper((unsigned char)text[i]) - 'A';
+        b = toupper((unsigned char)text[i + 1]) - 'A';
+
+        printf("%c", (key[0][0] * a + key[0][1] * b) % 26 + 'A');
+        printf("%c", (key[1][0] * a + key[1][1] * b) % 26 + 'A');
+    }
+
+    printf("\n");
+    return 0;
+}
